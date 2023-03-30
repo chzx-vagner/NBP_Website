@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous">
+    <title>NBP Hackers Official</title>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-light bg-light" align='center'>
+        <a class="navbar-brand" href="/">NBP Hackers</a>
+        {% if current_user.is_authenticated %}
+	    <p>
+            	<a class="navbar-brand">{{ current_user.name }}</a>
+            	<a class="btn btn-danger" href="/logout">Выход</a>
+	    </p>
+        {% else %}
+            <p>
+                <a class="btn btn-danger" href="/login">Вход</a>
+            </p>
+{% endif %}
+    </nav>
+</header>
+<!-- Begin page content -->
+
+<table width="15%" height="200" align="left" border="2 px">
+    <tr>
+        <td>
+            <p>
+                <a class="btn btn-danger" href="/login">Контакты</a>
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>
+                <a class="btn btn-danger butt" href="/login">О деят</a>
+            </p>
+        </td>
+    </tr>
+</table>
+
+<table width="80%" height="600" align="center" border="2 px">
+    <tr>
+        <td>
+            <main role="main" class="container">
+    {% block content %}{% endblock %}
+        </td>
+    </tr>
+</table>
+<br>
+
+	{% block form %}{% endblock %}
+</main>
+</body>
+</html>

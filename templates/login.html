@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="static/css/style.css" />
+
+    <title>NBP Hackers Official</title>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="/">NBP Hackers</a>
+    </nav>
+</header>
+    <h1 align="center">Авторизация</h1>
+    <form class="login_form" action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.email.label }}<br>
+            {{ form.email(class="form-control", type="email") }}<br>
+            {% for error in form.email.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.password.label }}<br>
+            {{ form.password(class="form-control", type="password") }}<br>
+            {% for error in form.password.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+        <p align='center'>
+		{{ form.submit(type="submit", class="btn btn-danger") }}
+		<a class="btn btn-danger" href="/register">Регистрация</a>
+	</p>
+        <div>{{ message }}</div>
+    </form>
+</body>
+</html>
