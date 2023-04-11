@@ -1,0 +1,123 @@
+*{
+	padding: 0;
+	margin: 0;
+	text-decoration: none;
+	list-style: none;
+}
+
+body{
+	background: #1a1e21;
+}
+
+.header{
+	width: calc(100% - 10px;);
+	padding: 5px;
+	display: flex;
+
+}
+
+.header h2{
+	margin-top: 20px;
+	margin-left: 5px;
+	color: white;
+	font-family: 'Roboto', sans-serif;
+}
+	
+.header i{
+	margin-top: 10px;
+	margin-left: 5px;
+	color: white;
+
+}
+
+	
+#header_img{
+	width: 70px;
+	height: 70px;
+	border-radius: 50%;
+}
+	
+.wrap_content{
+	width: 370px;
+	background: none;
+	border-radius: 5px;
+	position: absolute;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	top: 200px;
+}
+	
+.wrap_content h1{
+	font-family: 'Roboto', sans-serif;
+	color: #ffffff;
+	margin-bottom: 15px;
+}
+
+.wrap_content input{
+	margin-bottom: 15px;
+	width: 360px;
+	border:none;
+	height: 17px;
+	font-size: 18px;
+	padding: 5px;
+	border-radius: 5px;
+}
+	
+.wrap_content select{
+	margin-bottom: 15px;
+	width: 370px;
+	border:none;
+	height: 27px;
+	font-size: 18px;
+	padding: 5px;
+	border-radius: 5px;
+}
+
+.wrap_content button{
+	border:none;
+	background: #FF0000;
+	color: white;
+	font-family: 'Roboto', sans-serif;
+	font-weight: bold;
+	width: 370px;
+	height: 40px;
+	cursor: pointer;
+	border-radius: 5px;
+}
+	
+.wrap_content button:hover{
+	background: #80508a;
+}
+	
+.target{
+	margin-top: 30px;
+	color: white;
+	font-family: 'Roboto', sans-serif;
+	padding: 10px;
+		
+}
+	
+.targetenum{
+	margin: 10px;
+	margin-left: 15px;
+	margin-right: 15px;
+}
+	
+.targetenum a{
+	font-family: 'Roboto', sans-serif;
+	background: red;
+	font-weight: bold;
+	padding-left: 8px;
+	padding-right: 8px;
+	color: white;
+	cursor: pointer;
+	text-decoration: none;
+	float: right;
+}
+	
+.bots{
+	font-family: 'Roboto', sans-serif;
+	color: white;
+	margin: 10px;
+}

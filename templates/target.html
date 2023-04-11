@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="bots"><h2>Сервера: {{ count }}</h2></div>
+<div class="wrap_content">
+
+	<form action="/AddTask" method="POST">
+		<center><h1>NBP Stresser</h1></center>
+		<input type="text" name="target" placeholder="Target"><br>
+		<select name="method" id="method">
+			<option selected disabled>Метод L7 (http://ex.com)</option>
+			<option>HTTP</option>
+			<option>HTTP-RAW</option>
+			<option selected disabled>Метод L4 (0.0.0.0:80)</option>
+			<option>TCP</option>
+			<option>UDP</option>
+		</select>
+		<br>
+		<input type="text" name="timess" placeholder="Time"><br>
+		<button class="btn btn-danger butt">АТАКА!</button>
+	</form>
+
+	<div class="target">
+		<h4>{{ target }}</h4>
+		{% for i in tasks %}
+		<div class="targetenum">
+			<code>{{i.target}}</code>
+			<a href="/DelTask/{{i.id}}"><code>DEL</code></a>
+		</div>
+		{% endfor %}
+	</div>
+</div> 
+
+{% endblock %}
