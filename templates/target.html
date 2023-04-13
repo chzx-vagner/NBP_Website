@@ -2,8 +2,10 @@
 
 {% block content %}
 
+<link rel="stylesheet" type="text/css" href="static/css/ddostest.css" />
+
 <div class="bots"><h2>Сервера: {{ count }}</h2></div>
-<div class="wrap_content">
+<div class="wrap_content ddosbg ddosform">
 
 	<form action="/AddTask" method="POST">
 		<center><h1>NBP Stresser</h1></center>

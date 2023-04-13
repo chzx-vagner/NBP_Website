@@ -1,11 +1,11 @@
-*{
+.ddosform{
 	padding: 0;
 	margin: 0;
 	text-decoration: none;
 	list-style: none;
 }
 
-body{
+.ddosbg{
 	background: #1a1e21;
 }
 
