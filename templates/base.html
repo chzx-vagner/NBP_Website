@@ -8,6 +8,11 @@
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
           crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="static/css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="static/icons/favicon.ico">
+    <link type="image/png" sizes="16x16" rel="icon" href="static/icons/favicon-16x16.png">
+    <link type="image/png" sizes="32x32" rel="icon" href="static/icons/favicon-32x32.png">
+    <link type="image/png" sizes="96x96" rel="icon" href="static/icons/favicon-96x96.png">
+    <link type="image/png" sizes="120x120" rel="icon" href="static/icons/favicon-120x120.png">
     <title>NBP Hackers Official</title>
 </head>
 <body>
@@ -31,7 +36,12 @@
 <table width="15%" height="200" align="left" border="2 px">
     <tr>
         <td align='center' style="height: 60px">
-            <a class="btn btn-danger butt" href="/login">Контакты</a>
+            <a class="btn btn-danger butt" href="/">Главная</a>
+        </td>
+    </tr>
+    <tr>
+        <td align='center' style="height: 60px">
+            <a class="btn btn-danger butt" href="/contacts">Контакты</a>
         </td>
     </tr>
     <tr>
@@ -39,16 +49,26 @@
             <a class="btn btn-danger butt" href="/login">О деятельности</a>
         </td>
     </tr>
-	<tr>
+    <tr>
+        <td align='center' style="height: 60px">
+            <a class="btn btn-danger butt" href="https://t.me/nbphackersv2">Телеграм</a>
+        </td>
+    </tr>
+    <tr>
         <td align='center' style="height: 60px">
             <a class="btn btn-danger butt" href="/stresser">DDoS-тест</a>
         </td>
     </tr>
+    <tr>
+        <td align='center' style="height: 60px">
+            <a class="btn btn-danger butt" href="/feedback">Задать вопрос</a>
+        </td>
+    </tr>
 </table>
 
-<table width="60%" height="800" align="center" border="2 px">
+<table width="60%" height="800"border="2 px">
     <tr>
-        <td>
+        <td valign='top'>
             <main role="main" class="container">
     {% block content %}{% endblock %}
         </td>

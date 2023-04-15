@@ -2,15 +2,15 @@
 
 {% block content %}
 
-<link rel="stylesheet" type="text/css" href="static/css/ddostest.css" />
 
-<div class="bots"><h2>Сервера: {{ count }}</h2></div>
-<div class="wrap_content ddosbg ddosform">
-
+<div class="wrap_content">
 	<form action="/AddTask" method="POST">
-		<center><h1>NBP Stresser</h1></center>
-		<input type="text" name="target" placeholder="Target"><br>
-		<select name="method" id="method">
+		<center><h1>NBP Stresser</h1>
+		<center><h2>Сервера: {{ count }}</h2>
+		<br>
+		<input style="width: 120px" type="text" name="target" placeholder="Target"><br>
+		<br>
+		<select style=""width: 120px" name="method" id="method">
 			<option selected disabled>Метод L7 (http://ex.com)</option>
 			<option>HTTP</option>
 			<option>HTTP-RAW</option>
@@ -19,10 +19,11 @@
 			<option>UDP</option>
 		</select>
 		<br>
-		<input type="text" name="timess" placeholder="Time"><br>
-		<button class="btn btn-danger butt">АТАКА!</button>
+		<input style=""width: 120px" type="text" name="timess" placeholder="Time">
+		<br>
+		<br>
+		<center><button class="btn btn-danger butt">АТАКА!</button></center>
 	</form>
-
 	<div class="target">
 		<h4>{{ target }}</h4>
 		{% for i in tasks %}

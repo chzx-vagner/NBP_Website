@@ -5,11 +5,14 @@ from forms.user import LoginForm
 from data import db_session
 from data.users import User
 from data.news import News
+from data.feedback import Feedback
 from forms.news import NewsForm
+from forms.feedback import FeedbackForm
 from flask_login import LoginManager, login_user, login_required, logout_user
 from flask_login import current_user
 import datetime
-import json, threading, time, socket, random
+import json
+import threading, time, socket, random
 
 
 app = Flask(__name__)
@@ -31,6 +34,14 @@ def index():
     db_sess = db_session.create_session()
     news = db_sess.query(News).filter(News.is_private != True)
     return render_template("news.html", news=news)
+
+
+@app.route("/contacts")
+def contacts():
+    email = 'nbphackers@proton.me'
+    email2 = 'nbphackers@mail.ru'
+    phnum = '+79176661488'
+    return render_template("contacts.html", email=email, email2=email2, phnum=phnum)
 
 
 @app.route("/news")
@@ -172,6 +183,21 @@ def session_test():
         f"Вы пришли на эту страницу {visits_count + 1} раз")
 
 
+@app.route('/feedback', methods=['GET', 'POST'])
+def feedback():
+    form = FeedbackForm()
+    if form.validate_on_submit():
+        db_sess = db_session.create_session()
+        question = Feedback()
+        question.title = form.email.data
+        question.content = form.content.data
+        question.name = form.name.data
+        db_sess.add(question)
+        db_sess.commit()
+        return redirect('/feedback')
+    return render_template('feedback.html', title='Задать вопрос', form=form)
+
+
 bots = []
 tasks = {}
 
@@ -231,7 +257,7 @@ def getTask():
 
 @app.route("/AddTask", methods=["POST"])
 def addTask():
-    if "user" in session:
+    if current_user.is_authenticated:
         Err, form = [], request.form
         forms = {"target": "Пустое поле Target.", "method": "Пустое поле Method.", "timess": "Пустое поле Time."}
         for i in list(forms.keys()):
@@ -259,13 +285,13 @@ def addTask():
             Err.append("Метода не существует")
 
         if len(Err) != 0:
-            return f"{Err[0]}<br><br><a href=\"/home\">Назад</a>"
+            return f"{Err[0]}<br><br><a href=\"/stresser\">Назад</a>"
         else:
             key = str(random.getrandbits(30))
             tasks[key] = {"status": "_", "target": form["target"], "time": form["timess"],
                           "type": form["method"].lower(), "id": key}
             threading.Thread(target=check, args=(form["timess"], key)).start()
-            return redirect("/home")
+            return redirect("/stresser")
     else:
         return redirect("/login")
 
@@ -276,7 +302,7 @@ def delTask(targets):
         tasks.pop(targets)
     except:
         pass
-    return redirect("/home")
+    return redirect("/stresser")
 
 
 def main():
