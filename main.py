@@ -1,5 +1,5 @@
 from flask import Flask, request, url_for, render_template, abort
-from flask import json, redirect, make_response, session
+from flask import json, redirect, make_response, session, flash
 from forms.user import RegisterForm
 from forms.user import LoginForm
 from data import db_session
@@ -19,6 +19,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'nbphackers_secret_key_A8HFGEWUY1SD35FG'
 app.config['PERMANENT_SESSION_LIFETIME'] = datetime.timedelta(
     days=7)
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 
@@ -196,6 +197,16 @@ def feedback():
         db_sess.commit()
         return redirect('/feedback')
     return render_template('feedback.html', title='Задать вопрос', form=form)
+
+
+@app.route('/upload', methods=['POST', 'GET'])
+def upload():
+    if request.method == 'GET':
+        return render_template('upload.html')
+    elif request.method == 'POST':
+        f = request.files['file']
+        print(f.read())
+        return "Файл отправлен"
 
 
 bots = []
