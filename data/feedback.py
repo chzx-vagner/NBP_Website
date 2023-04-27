@@ -1,9 +1,10 @@
 import datetime
 import sqlalchemy
 from .db_session import SqlAlchemyBase
+from sqlalchemy_serializer import SerializerMixin
 
 
-class Feedback(SqlAlchemyBase):
+class Feedback(SqlAlchemyBase, SerializerMixin):
     __tablename__ = 'feedback'
 
     id = sqlalchemy.Column(sqlalchemy.Integer,

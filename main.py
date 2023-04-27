@@ -11,6 +11,10 @@ from forms.feedback import FeedbackForm
 from flask_login import LoginManager, login_user, login_required, logout_user
 from flask_login import current_user
 import datetime
+from flask_restful import reqparse, abort, Api, Resource
+from data import db_session, news_api
+from flask import jsonify
+from flask import make_response
 import json
 import threading, time, socket, random
 
@@ -19,6 +23,8 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'nbphackers_secret_key_A8HFGEWUY1SD35FG'
 app.config['PERMANENT_SESSION_LIFETIME'] = datetime.timedelta(
     days=7)
+api = Api(app)
+
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -37,11 +43,16 @@ def index():
     return render_template("news.html", news=news)
 
 
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
+
 @app.route("/contacts")
 def contacts():
     email = 'nbphackers@proton.me'
     email2 = 'nbphackers@mail.ru'
-    phnum = '+79176661488'
+    phnum = '+79176669993'
     return render_template("contacts.html", email=email, email2=email2, phnum=phnum)
 
 
@@ -101,7 +112,7 @@ def edit_news(id):
             return redirect('/')
         else:
             abort(404)
-    return render_template('news.html', title='Редактирование новости', form=form)
+    return render_template('admin.html', title='Редактирование новости', form=form)
 
 
 @app.route('/news_delete/<int:id>', methods=['GET', 'POST'])
@@ -209,12 +220,21 @@ def upload():
         return "Файл отправлен"
 
 
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify({'error': 'Not found'}), 404)
+
+
+@app.errorhandler(400)
+def bad_request(_):
+    return make_response(jsonify({'error': 'Bad Request'}), 400)
+
+
 def main():
-    db_session.global_init("db/blogs.sqlite")
+    db_session.global_init("db/data.sqlite")
+    app.register_blueprint(news_api.blueprint)
     user = User()
     db_sess = db_session.create_session()
-
-
     app.run(port=8080, host='127.0.0.1')
 
 
